@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item>
+      <ion-buttons>
+        <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        L O G I N
+      </ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-card class="login">
+
+      <form [formGroup]="datosForm" (ngSubmit)="abc(datosForm.value)">
+          <div class="inputs">
+            <ion-item>
+              <ion-label position="floating" class="tag">Usuario</ion-label>
+              <ion-input formControlName="email" placeholder="example@something.com" required></ion-input>
+            </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" class="tag">Contraseña</ion-label>
+            <ion-input formControlName="password" placeholder="*********" type="password" required minlength="6"></ion-input>
+          </ion-item>
+          </div>
+
+          <!-- fill="clear" con esto se quedan las letras como "flotando"
+          expand="block" type="submit" [disabled]="!datosForm.valid"
+          -->
+          <ion-button shape="round" color="success" expand="block" type="submit" [disabled]="!datosForm.valid" style="margin-top:2em;">
+            Iniciar Sesión
+          </ion-button>
+      </form>
+
+          <ion-button shape="round" color="success" expand="block" type="submit" style="margin-top:2em;" (click)="register()">
+            ¿No tienes cuenta? ¡Crea una!
+          </ion-button>
+
+        </ion-card>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>

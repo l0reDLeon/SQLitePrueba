@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { LoginService } from './../loginp/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,19 @@ export class DbService {
   citasList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+usuarioId=null;
+
   constructor(
     private platform: Platform,
     private sqlite: SQLite,
     private httpClient: HttpClient,
     private sqlPorter: SQLitePorter,
+    private loginService: LoginService
   ) {
+    this.loginService.usuarioId.subscribe(usuarioId =>{
+      this.usuarioId = usuarioId;
+      console.log(this.usuarioId);
+    });
     this.platform.ready().then(() => {
       this.sqlite.create({
         name: 'positronx_db.db',
@@ -28,10 +36,11 @@ export class DbService {
       })
       .then((db: SQLiteObject) => {
           this.storage = db;
-          this.getFakeData();
+          this.getFakeData(this.usuarioId);
       });
     });
   }
+
 
   dbState() {
     return this.isDbReady.asObservable();
@@ -42,14 +51,14 @@ export class DbService {
   }
 
     // Render fake data
-    getFakeData() {
+    getFakeData(user) {
       this.httpClient.get(
         'assets/dump.sql',
         {responseType: 'text'}
       ).subscribe(data => {
         this.sqlPorter.importSqlToDb(this.storage, data)
           .then(_ => {
-            this.getCitas();
+            this.getCitas(user);
             this.isDbReady.next(true);
           })
           .catch(error => console.error(error));
@@ -57,12 +66,12 @@ export class DbService {
     }
 
   // Get list
-  getCitas(){
+  getCitas(user?){
     return this.storage.executeSql('SELECT * FROM citas', []).then(res => {//where usuario_id = USUARIO_ID
       let items: Cita[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          // if(res.rows.item(i).usuario_id == 1){ ////////////////////////////////////////////////////////////////////////////////////////////////
+           if(res.rows.item(i).usuario_id == user){ ////////////////////////////////////////////////////////////////////////////////////////////////
             items.push({
               id: res.rows.item(i).id,
               usuario_id: res.rows.item(i).usuario_id,
@@ -71,28 +80,19 @@ export class DbService {
               hora: res.rows.item(i).hora,
               sintomas: res.rows.item(i).sintomas,
              });
-          // }
+          }
         }
       }
       this.citasList.next(items);
     });
   }
 
-  /*export class Cita {
-  usuario_id: number;
-    nombre: string;
-    fecha:string;
-    hora:string;
-    sintomas: string;
-}
- */
-
   // Add
   addCita(usuario_id, nombre, fecha,hora,sintomas) {
     let data = [usuario_id,nombre, fecha, hora, sintomas];
     return this.storage.executeSql('INSERT INTO citas (usuario_id, nombre, fecha, hora, sintomas) VALUES (?, ?, ?, ?, ?)', data)
     .then(res => {
-      this.getCitas();
+      this.getCitas(this.usuarioId);
     });
   }
 

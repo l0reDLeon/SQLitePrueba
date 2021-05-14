@@ -1,3 +1,4 @@
+import { LoginService } from './../loginp/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { DbService } from './../services/db.service';
@@ -10,13 +11,21 @@ import { Router } from "@angular/router";
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  usuarioId= null;
 
   constructor(
     private db: DbService,
     public formBuilder: FormBuilder,
     private toast: ToastController,
-    private router: Router
-  ) { }
+    private router: Router,
+   private loginService: LoginService
+  ){
+      this.loginService.usuarioId.subscribe(usuarioId =>{
+      this.usuarioId = usuarioId;
+      console.log(this.usuarioId);
+    });
+  }
+
 
   mainForm: FormGroup;
   Data: any[] = [];
@@ -36,7 +45,7 @@ export class HomePage {
     });
 
     this.mainForm = this.formBuilder.group({
-      usuario_id: [''],
+      // usuario_id: [''],
       nombre: [''],
       fecha: [''],
       hora: [''],
@@ -46,7 +55,7 @@ export class HomePage {
 
   storeData() {
     this.db.addCita(
-      this.mainForm.value.usuario_id,
+      this.usuarioId,
       this.mainForm.value.nombre,
       this.mainForm.value.fecha,
       this.mainForm.value.hora,

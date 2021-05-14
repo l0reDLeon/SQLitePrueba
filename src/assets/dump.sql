@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS citas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario_id INTEGER,
+    usuario_id TEXT,
     nombre TEXT,
     fecha TEXT,
     hora TEXT,

@@ -1,0 +1,44 @@
+body{
+  background-color: #484349;
+}
+
+.login{
+  background-color: #DCD6F7;
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  /* IMPORTANTE */
+  text-align: center;
+
+  width:30em;
+  height:30em;
+}
+
+.tag{
+  color:#484349;
+}
+
+.title{
+  font-size: xx-large;
+  margin-top: 12%;
+  margin-bottom: 1rem;
+}
+
+.boton{
+  position: absolute;
+  top: 80%;
+  transform: translateX(7%);
+  height: 12%;
+  width:80%
+}
+.boton2{
+  position: absolute;
+  top: 75%;
+  transform: translateX(7%);
+  height: 12%;
+  width:80%
+}
+
+.inputs{
+  margin-top: 20%;
+}
