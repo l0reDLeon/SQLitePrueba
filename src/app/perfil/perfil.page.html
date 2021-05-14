@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>APP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Tu perfil 
+    </ion-list-header>
+
+    <ion-item lines="inset" *ngFor="let data of Data">
+        <!-- <h5>{{data.usuario_id}}</h5> -->
+        <!-- <p>{{data.nombre}}</p> -->
+        <ion-avatar class="image-center">
+          <img src="{{data.imagen}}">
+        </ion-avatar>
+        <h5>Nombre: {{data.nombre}}</h5>
+
+        <h6>Descripcion: {{data.descrip}}</h6>
+        <h6>Fecha: {{data.fecha_nac}}</h6>
+        <h6>Email: {{data.email}}</h6>
+
+      <!-- <div class="item-note" item-end>
+        <ion-icon name="create" style="zoom:2.0" [routerLink]="['/citas/', data.id]"></ion-icon>
+        <ion-icon name="trash" style="zoom:2.0" (click)="deleteCita(data.id)"></ion-icon>
+      </div> -->
+    </ion-item>
+  </ion-list>
+</ion-content>

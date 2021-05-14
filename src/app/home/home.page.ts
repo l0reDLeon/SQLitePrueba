@@ -21,7 +21,12 @@ export class HomePage {
   mainForm: FormGroup;
   Data: any[] = [];
 
-  ngOnInit() {
+  redirectToPerfil(){
+    this.router.navigateByUrl("perfil");
+  }
+
+
+  ngOnInit(){
     this.db.dbState().subscribe((res) => {
       if(res){
         this.db.fetchCitas().subscribe(item => {
@@ -31,6 +36,7 @@ export class HomePage {
     });
 
     this.mainForm = this.formBuilder.group({
+      usuario_id: [''],
       nombre: [''],
       fecha: [''],
       hora: [''],
@@ -59,7 +65,5 @@ export class HomePage {
       toast.present();
     })
   }
-
-
-
 }
+

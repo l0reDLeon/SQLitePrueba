@@ -6,5 +6,16 @@ CREATE TABLE IF NOT EXISTS citas(
     hora TEXT,
     sintomas TEXT
 );
+-- INSERT or IGNORE INTO citas(usuario_id, nombre, fecha, hora, sintomas) VALUES (1, 'Mario', '13/05/2021','15:55','Me duele la cabeza');
 
-INSERT or IGNORE INTO citas(id, nombre, fecha, hora, sintomas) VALUES (1,1, 'Mario', '13/05/2021','15:55');
+/*
+
+# Android
+ionic cordova build android
+
+----------------------------------
+
+# Android
+ionic cordova run android -l
+
+*/

@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'citas/:id',
     loadChildren: () => import('./citas/citas.module').then( m => m.CitasPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
   }
 ];
 

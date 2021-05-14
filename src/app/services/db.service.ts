@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Cita } from './cita-service';
@@ -63,14 +62,16 @@ export class DbService {
       let items: Cita[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            id: res.rows.item(i).id,
-            usuario_id: res.rows.item(i).usuario_id,
-            nombre: res.rows.item(i).nombre,
-            fecha:res.rows.item(i).fecha,
-            hora: res.rows.item(i).hora,
-            sintomas: res.rows.item(i).sintomas,
-           });
+          // if(res.rows.item(i).usuario_id == 1){ ////////////////////////////////////////////////////////////////////////////////////////////////
+            items.push({
+              id: res.rows.item(i).id,
+              usuario_id: res.rows.item(i).usuario_id,
+              nombre: res.rows.item(i).nombre,
+              fecha:res.rows.item(i).fecha,
+              hora: res.rows.item(i).hora,
+              sintomas: res.rows.item(i).sintomas,
+             });
+          // }
         }
       }
       this.citasList.next(items);
@@ -89,7 +90,7 @@ export class DbService {
   // Add
   addCita(usuario_id, nombre, fecha,hora,sintomas) {
     let data = [usuario_id,nombre, fecha, hora, sintomas];
-    return this.storage.executeSql('INSERT INTO citas (usuario_id, nombre, fecha, hora, sintomas) VALUES (?,?, ?, ?, ?)', data)
+    return this.storage.executeSql('INSERT INTO citas (usuario_id, nombre, fecha, hora, sintomas) VALUES (?, ?, ?, ?, ?)', data)
     .then(res => {
       this.getCitas();
     });
@@ -112,7 +113,7 @@ export class DbService {
   // Update
   updateCita(id, cita: Cita) {
     let data = [cita.usuario_id, cita.nombre, cita.fecha, cita.hora, cita.sintomas];
-    return this.storage.executeSql(`UPDATE citas SET usuario_id = ?, nombre = ?, fecha = ?, hora = ?, sintomas = ? WHERE usuario_id = ${id}`, data)
+    return this.storage.executeSql(`UPDATE citas SET usuario_id = ?, nombre = ?, fecha = ?, hora = ?, sintomas = ? WHERE id = ${id}`, data)
     .then(data => {
       this.getCitas();
     })
@@ -120,7 +121,7 @@ export class DbService {
 
   // Delete
   deleteCita(id) {
-    return this.storage.executeSql('DELETE FROM cita WHERE id = ?', [id])
+    return this.storage.executeSql('DELETE FROM citas WHERE id = ?', [id])
     .then(_ => {
       this.getCitas();
     });

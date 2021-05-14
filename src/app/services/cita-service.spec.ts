@@ -1,7 +1,7 @@
-import { CitaService } from './cita-service';
+import { Cita } from './cita-service';
 
-describe('CitaService', () => {
+describe('Cita', () => {
   it('should create an instance', () => {
-    expect(new CitaService()).toBeTruthy();
+    expect(new Cita()).toBeTruthy();
   });
 });

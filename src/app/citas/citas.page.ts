@@ -22,16 +22,22 @@ export class CitasPage implements OnInit {
 
     this.db.getCita(this.id).then(res => {
       this.editForm.setValue({
-        artist_name: res['artist_name'],
-        song_name: res['song_name']
+        usuario_id: res['usuario_id'],
+        nombre: res['nombre'],
+        fecha: res['fecha'],
+        hora: res['hora'],
+        sintomas: res['sintomas'],
       })
     })
   }
 
   ngOnInit() {
     this.editForm = this.formBuilder.group({
-      artist_name: [''],
-      song_name: ['']
+      usuario_id: [''],
+      nombre:[''],
+      fecha:[''],
+      hora: [''],
+      sintomas: ['']
     })
   }
 
