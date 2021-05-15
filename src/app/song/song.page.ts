@@ -4,11 +4,11 @@ import { DbService } from './../services/db.service'
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-citas',
-  templateUrl: './citas.page.html',
-  styleUrls: ['./citas.page.scss'],
+  selector: 'app-song',
+  templateUrl: './song.page.html',
+  styleUrls: ['./song.page.scss'],
 })
-export class CitasPage implements OnInit {
+export class SongPage implements OnInit {
   editForm: FormGroup;
   id: any;
 
@@ -20,29 +20,23 @@ export class CitasPage implements OnInit {
   ) {
     this.id = this.actRoute.snapshot.paramMap.get('id');
 
-    this.db.getCita(this.id).then(res => {
+    this.db.getSong(this.id).then(res => {
       this.editForm.setValue({
-        // usuario_id: res['usuario_id'],
-        nombre: res['nombre'],
-        fecha: res['fecha'],
-        hora: res['hora'],
-        sintomas: res['sintomas'],
+        artist_name: res['artist_name'],
+        song_name: res['song_name']
       })
     })
   }
 
   ngOnInit() {
     this.editForm = this.formBuilder.group({
-      // usuario_id: [''],
-      nombre:[''],
-      fecha:[''],
-      hora: [''],
-      sintomas: ['']
+      artist_name: [''],
+      song_name: ['']
     })
   }
 
   saveForm(){
-    this.db.updateCita(this.id, this.editForm.value)
+    this.db.updateSong(this.id, this.editForm.value)
     .then( (res) => {
       console.log(res)
       this.router.navigate(['/home']);

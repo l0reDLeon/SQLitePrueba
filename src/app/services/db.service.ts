@@ -112,8 +112,8 @@ usuarioId=null;
 
   // Update
   updateCita(id, cita: Cita) {
-    let data = [cita.usuario_id, cita.nombre, cita.fecha, cita.hora, cita.sintomas];
-    return this.storage.executeSql(`UPDATE citas SET usuario_id = ?, nombre = ?, fecha = ?, hora = ?, sintomas = ? WHERE id = ${id}`, data)
+    let data = [, cita.nombre, cita.fecha, cita.hora, cita.sintomas];
+    return this.storage.executeSql(`UPDATE citas SET  nombre = ?, fecha = ?, hora = ?, sintomas = ? WHERE id = ${id}`, data)
     .then(data => {
       this.getCitas();
     })
